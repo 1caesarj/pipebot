@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Test</title>
+</head>
+<h1>test</h1>
+
+<body>
+    <script>
+        // Richtige Struktur (laut offizieller n8n-Doku)
+        window.ChatWidgetConfig = {
+            webhooks: {
+                url: 'https://pipelineaibot.app.n8n.cloud/webhook/3066347a-ccd0-41c4-bb0c-7986377b5e20/chat',
+                route: 'general'
+            },
+            branding: {
+                logo: 'https://img.freepik.com/free-vector/chatbot-chat-message-vectorart_78370-4104.jpg',
+                name: 'MicBot',
+                welcomeText: 'Gerne helfen wir weiter! 😊 Schreiben Sie einfach.',
+                responseTimeText: 'Wir antworten normalerweise innerhalb weniger Minuten.'
+            },
+            style: {
+                primaryColor: '#2b557b',
+                secondaryColor: '#2b557b',
+                position: 'right',
+                backgroundColor: '#ffffff',
+                fontColor: '#333333'
+            }
+        };
+    </script>
+
+    <!-- Wichtig: NICHT defer, sonst läuft das Widget-Skript, bevor die Config verfügbar ist -->
+    <script src="https://cdn.jsdelivr.net/npm/@n8n/chat-widget@latest/dist/chat-widget.js"></script>
+</body>
+
+</html>
