@@ -1,37 +1,19 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PipeBot</title>
-  </head>
-
-  <body>
-    <h1>test</h1>
-
-    <script>
-      window.ChatWidgetConfig = {
-        webhooks: {
-          url: 'https://pipelineaibot.app.n8n.cloud/webhook/3066347a-ccd0-41c4-bb0c-7986377b5e20/chat',
-          route: 'general'
-        },
-        branding: {
-          logo: 'https://img.freepik.com/free-vector/chatbot-chat-message-vectorart_78370-4104.jpg',
-          name: 'MicBot',
-          welcomeText: 'Gerne helfen wir weiter! 😊 Schreiben Sie einfach.',
-          responseTimeText: 'Wir antworten normalerweise innerhalb weniger Minuten.'
-        },
-        style: {
-          primaryColor: '#2b557b',
-          secondaryColor: '#2b557b',
-          position: 'right',
-          backgroundColor: '#ffffff',
-          fontColor: '#333333'
-        }
-      };
-    </script>
-
-    <!-- Dieses Skript MUSS zuletzt stehen und darf KEIN "defer" haben -->
-    <script src="https://cdn.jsdelivr.net/npm/@n8n/chat-widget@latest/dist/chat-widget.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <title>Pipebot Test</title>
+</head>
+<body>
+  <h1>Test</h1>
+  <script>
+    window.ChatWidgetConfig = {
+      webhooks: {
+        url: 'https://pipelineaibot.app.n8n.cloud/webhook/3066347a-ccdd-41c4-bb0c-7986377b5e20/chat',
+        route: 'general'
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@n8n/chat-widget@latest/dist/chat-widget.js"></script>
+</body>
 </html>
