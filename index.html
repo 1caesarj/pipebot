@@ -3,147 +3,95 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PipelineAI Chat — Floating Launcher unten</title>
+  <title>PipelineAI Chat</title>
 
-  <!-- Original n8n Chat Style -->
+  <!-- n8n Chat Styles -->
   <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
-  <!-- Tailwind (optional, für Utility-Klassen im Wrapper) -->
+  <!-- Tailwind für moderne Utility Styles -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    :root{
-      --neon-1: #00ffc8;
-      --neon-2: #00bfff;
-      --glass-bg: rgba(255,255,255,0.06);
+    /* ==== Hintergrund & Grunddesign ==== */
+    body {
+      margin: 0;
+      background: radial-gradient(circle at 25% 15%, #051622, #010409 80%);
+      color: #fff;
+      font-family: "Inter", sans-serif;
+      overflow-x: hidden;
     }
 
-    body{
-      margin:0;
-      min-height:100vh;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: radial-gradient(circle at 20% 10%, rgba(0,255,200,0.06), transparent 12%),
-                  radial-gradient(circle at 80% 90%, rgba(0,150,255,0.06), transparent 12%),
-                  #05060b;
-      color:#fff;
-    }
-
-    /* starke glow/blur im Hintergrund */
-    .glow-bg{
-      position:fixed;
-      inset:0;
-      z-index:-2;
-      filter: blur(80px) saturate(1.2);
+    /* Pulsierende Hintergrundlichter */
+    .glow-bg {
+      position: fixed;
+      inset: 0;
       background:
-        radial-gradient(circle at 25% 25%, rgba(0,255,200,0.14), transparent 18%),
-        radial-gradient(circle at 75% 75%, rgba(0,120,255,0.12), transparent 18%);
-      pointer-events:none;
-      animation: slowPulse 9s ease-in-out infinite alternate;
-    }
-    @keyframes slowPulse{
-      from { transform: scale(1); opacity:0.9; }
-      to   { transform: scale(1.08); opacity:1; }
+        radial-gradient(circle at 30% 40%, rgba(0,255,200,0.15), transparent 70%),
+        radial-gradient(circle at 70% 80%, rgba(0,150,255,0.15), transparent 70%);
+      filter: blur(80px);
+      animation: glow 10s ease-in-out infinite alternate;
+      z-index: -1;
     }
 
-    /* ====== FIXED FLOATING LAUNCHER (ICON) ======
-       Wir stylen das web component selbst so, dass der Launcher
-       immer unten-rechts sitzt. !important um Konflikte zu überschreiben.
-       */
-    n8n-chat{
+    @keyframes glow {
+      from { transform: scale(1); opacity: 0.7; }
+      to { transform: scale(1.2); opacity: 1; }
+    }
+
+    /* ==== Branding oben ==== */
+    .branding {
+      text-align: center;
+      padding-top: 5rem;
+      font-size: 2rem;
+      font-weight: 800;
+      color: #00ffc8;
+      text-shadow: 0 0 12px #00ffc8, 0 0 20px #00bfff;
+    }
+
+    .subtitle {
+      text-align: center;
+      opacity: 0.8;
+      font-size: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    /* ==== Fixiertes Chat-Icon unten rechts ==== */
+    n8n-chat {
       position: fixed !important;
-      right: 20px !important;
-      bottom: 20px !important;
-      z-index: 99999 !important;
-
-      /* Größe des launcher-Buttons (falls die Komponente eigene CSS-Variablen beachtet) */
-      width: 84px !important;
-      height: 84px !important;
-
-      /* visuelles Tuning */
-      border-radius: 22px !important;
-      box-shadow: 0 20px 60px rgba(0,255,180,0.14), 0 6px 18px rgba(0,0,0,0.6) !important;
-      transform: none !important;
-      transition: box-shadow .25s ease, transform .15s ease;
-      overflow: visible !important;
-    }
-
-    /* wenn der Chat geöffnet wird (falls das Component ein Attribut wie "opened" setzt),
-       stellen wir eine größere, rechts-bündige Box sicher.
-       Falls das Attribut anders heißt, wirkt dieser Block trotzdem nicht schädlich.
-    */
-    n8n-chat[opened],
-    n8n-chat[open]{
-      right: 24px !important;
       bottom: 24px !important;
-      width: min(420px, 92vw) !important;
-      height: min(720px, 92vh) !important;
-      border-radius: 16px !important;
-      box-shadow: 0 40px 120px rgba(0,140,255,0.18) !important;
+      right: 24px !important;
+      z-index: 99999 !important;
     }
 
-    /* Extra: Launcher-Icon Optik (falls n8n-chat rendert ein Icon im host-element) */
-    n8n-chat::part(launcher),
-    n8n-chat::part(button){
-      /* Falls das WebComponent part-namen bietet, greifen wir hier (sicherheitsnetz) */
-      width: 84px;
-      height: 84px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, rgba(0,255,200,0.12), rgba(0,180,255,0.08));
-      box-shadow: 0 8px 28px rgba(0,255,180,0.12), inset 0 -6px 18px rgba(0,0,0,0.25);
+    /* ==== Custom Design des Chatbots ==== */
+    n8n-chat {
+      --chat-background: rgba(20, 25, 35, 0.92);
+      --chat-border-radius: 1.25rem;
+      --chat-bot-message-bg: linear-gradient(135deg, rgba(0,180,255,0.2), rgba(0,255,200,0.25));
+      --chat-user-message-bg: linear-gradient(135deg, rgba(0,255,180,0.25), rgba(0,150,255,0.2));
+      --chat-message-color: #ffffff;
+      --chat-font-family: 'Inter', sans-serif;
+      --chat-input-bg: rgba(255,255,255,0.06);
+      --chat-input-color: #ffffff;
+      --chat-send-button-bg: #00ffc8;
+      --chat-send-button-hover-bg: #00bfff;
+      --chat-border-color: rgba(255,255,255,0.1);
+      --chat-shadow: 0 0 30px rgba(0,255,200,0.25);
     }
 
-    /* Fallback: falls die Komponente Shadow-DOM nutzt und ::part nicht vorhanden ist,
-       sorgt das host-styling oben trotzdem dafür, dass das ganze Element die richtige Position hat.
-    */
-
-    /* kleine Floating-Badge oben links im Launcher (optional) */
-    .launcher-badge{
-      position: absolute;
-      right: 6px;
-      bottom: 6px;
-      background: linear-gradient(180deg,var(--neon-1),var(--neon-2));
-      color:#001;
-      font-weight:800;
-      font-size:12px;
-      padding:6px 8px;
-      border-radius:999px;
-      box-shadow: 0 6px 18px rgba(0,255,200,0.12);
-      pointer-events:none;
-      z-index: 2;
+    /* Effekt beim Öffnen */
+    n8n-chat[open], n8n-chat[opened] {
+      box-shadow: 0 0 60px rgba(0,255,200,0.3);
+      border-radius: 20px !important;
     }
-
-    /* Stil für die sichtbare Branding-Card (wenn du sie weiter nutzen willst) */
-    .branding-card{
-      max-width:480px;
-      margin: 28vh auto 0; /* sichtbar mittig, aber wir verwenden den floating launcher standard */
-      padding: 18px;
-      border-radius: 18px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border: 1px solid rgba(255,255,255,0.04);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
-    }
-
-    h1.brand{
-      color: var(--neon-1);
-      text-shadow: 0 0 10px rgba(0,255,180,0.12);
-      font-weight:800;
-      margin:0 0 8px 0;
-      font-size:1.3rem;
-    }
-    p.lead{ margin:0; opacity:0.9; font-size:0.95rem; }
   </style>
 </head>
 <body>
-  <div class="glow-bg" aria-hidden="true"></div>
+  <div class="glow-bg"></div>
 
-  <!-- optional sichtbare Branding-Card (kann weg, wenn du nur den Launcher willst) -->
-  <div class="branding-card hidden md:block">
-    <h1 class="brand">PipelineAI Chat</h1>
-    <p class="lead">Ich bin der PipelineAI Bot — Klick das Icon unten rechts, um mit mir zu chatten.</p>
-  </div>
+  <h1 class="branding">PipelineAI Chat 🤖</h1>
+  <p class="subtitle">Ich bin der PipelineAI Bot — frag mich, was du willst!</p>
 
-  <!-- n8n chat initialisieren: WICHTIG: kein `target` setzen, so bleibt der Standard-Launcher aktiv -->
   <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
@@ -152,8 +100,8 @@
       initialMessages: [
         'Überschrift',
         'Ich bin der PipelineAI Bot, wie kann ich dir helfen?'
-      ]
-      // kein target: n8n erzeugt dann den schwebenden launcher (default)
+      ],
+      // kein target -> erzeugt das Floating-Icon unten rechts
     });
   </script>
 </body>
