@@ -2,106 +2,78 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PipelineAI Chat</title>
 
   <!-- n8n Chat Styles -->
   <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
-  <!-- Tailwind für moderne Utility Styles -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
+  <!-- ==== Chat-Design-Anpassungen ==== -->
   <style>
-    /* ==== Hintergrund & Grunddesign ==== */
-    body {
-      margin: 0;
-      background: radial-gradient(circle at 25% 15%, #051622, #010409 80%);
-      color: #fff;
-      font-family: "Inter", sans-serif;
-      overflow-x: hidden;
+    /* Nur das Widget selbst */
+    n8n-chat {
+      /* ======= Allgemeine Optik ======= */
+      --chat-font-family: "Inter", sans-serif;
+      --chat-font-size: 15px;
+      --chat-line-height: 1.4;
+      --chat-background: rgba(20, 25, 35, 0.96);
+      --chat-border-radius: 1.25rem;
+      --chat-border-color: rgba(255, 255, 255, 0.08);
+      --chat-shadow: 0 0 40px rgba(0, 255, 200, 0.25);
+
+      /* ======= Nachrichtenblasen ======= */
+      --chat-bot-message-bg: linear-gradient(135deg, rgba(0,180,255,0.25), rgba(0,255,200,0.25));
+      --chat-user-message-bg: linear-gradient(135deg, rgba(0,255,200,0.25), rgba(0,180,255,0.25));
+      --chat-message-color: #ffffff;
+
+      /* ======= Eingabefeld ======= */
+      --chat-input-bg: rgba(255,255,255,0.08);
+      --chat-input-color: #ffffff;
+      --chat-input-border: 1px solid rgba(255,255,255,0.1);
+      --chat-input-placeholder-color: rgba(255,255,255,0.6);
+
+      /* ======= Buttons ======= */
+      --chat-send-button-bg: #00ffc8;
+      --chat-send-button-hover-bg: #00bfff;
+      --chat-send-button-color: #000;
+
+      /* ======= Scrollbar (optional) ======= */
+      --chat-scrollbar-thumb-bg: rgba(0,255,200,0.3);
+      --chat-scrollbar-track-bg: rgba(255,255,255,0.05);
+
+      /* ======= Abstände & Layout ======= */
+      --chat-bubble-padding: 10px 14px;
+      --chat-spacing: 0.5rem;
     }
 
-    /* Pulsierende Hintergrundlichter */
-    .glow-bg {
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(circle at 30% 40%, rgba(0,255,200,0.15), transparent 70%),
-        radial-gradient(circle at 70% 80%, rgba(0,150,255,0.15), transparent 70%);
-      filter: blur(80px);
-      animation: glow 10s ease-in-out infinite alternate;
-      z-index: -1;
-    }
-
-    @keyframes glow {
-      from { transform: scale(1); opacity: 0.7; }
-      to { transform: scale(1.2); opacity: 1; }
-    }
-
-    /* ==== Branding oben ==== */
-    .branding {
-      text-align: center;
-      padding-top: 5rem;
-      font-size: 2rem;
-      font-weight: 800;
-      color: #00ffc8;
-      text-shadow: 0 0 12px #00ffc8, 0 0 20px #00bfff;
-    }
-
-    .subtitle {
-      text-align: center;
-      opacity: 0.8;
-      font-size: 1rem;
-      margin-top: 0.5rem;
-    }
-
-    /* ==== Fixiertes Chat-Icon unten rechts ==== */
+    /* ==== Fixiert das Icon unten rechts ==== */
     n8n-chat {
       position: fixed !important;
       bottom: 24px !important;
       right: 24px !important;
-      z-index: 99999 !important;
+      z-index: 9999 !important;
     }
 
-    /* ==== Custom Design des Chatbots ==== */
-    n8n-chat {
-      --chat-background: rgba(20, 25, 35, 0.92);
-      --chat-border-radius: 1.25rem;
-      --chat-bot-message-bg: linear-gradient(135deg, rgba(0,180,255,0.2), rgba(0,255,200,0.25));
-      --chat-user-message-bg: linear-gradient(135deg, rgba(0,255,180,0.25), rgba(0,150,255,0.2));
-      --chat-message-color: #ffffff;
-      --chat-font-family: 'Inter', sans-serif;
-      --chat-input-bg: rgba(255,255,255,0.06);
-      --chat-input-color: #ffffff;
-      --chat-send-button-bg: #00ffc8;
-      --chat-send-button-hover-bg: #00bfff;
-      --chat-border-color: rgba(255,255,255,0.1);
-      --chat-shadow: 0 0 30px rgba(0,255,200,0.25);
-    }
-
-    /* Effekt beim Öffnen */
+    /* ==== Optional: Effekt beim Öffnen ==== */
     n8n-chat[open], n8n-chat[opened] {
-      box-shadow: 0 0 60px rgba(0,255,200,0.3);
+      box-shadow: 0 0 60px rgba(0,255,200,0.35);
       border-radius: 20px !important;
+      transition: all 0.3s ease;
     }
   </style>
 </head>
 <body>
-  <div class="glow-bg"></div>
-
-  <h1 class="branding">PipelineAI Chat 🤖</h1>
-  <p class="subtitle">Ich bin der PipelineAI Bot — frag mich, was du willst!</p>
-
+  <!-- Nur der Chat, kein restliches Layout -->
   <script type="module">
-    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+    import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
 
     createChat({
-      webhookUrl: 'https://pipelineaibot.app.n8n.cloud/webhook/fdb5ceb1-3452-4f25-b882-bec085488928/chat',
+      webhookUrl: "https://pipelineaibot.app.n8n.cloud/webhook/fdb5ceb1-3452-4f25-b882-bec085488928/chat",
       initialMessages: [
-        'Überschrift',
-        'Ich bin der PipelineAI Bot, wie kann ich dir helfen?'
+        "Überschrift",
+        "Ich bin der PipelineAI Bot, wie kann ich dir helfen?"
       ],
-      // kein target -> erzeugt das Floating-Icon unten rechts
+      // kein target => Standard-Launcher (Icon unten rechts)
     });
   </script>
 </body>
