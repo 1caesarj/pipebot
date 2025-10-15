@@ -1,13 +1,106 @@
-<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
-<script type="module">
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PipelineAI Chat</title>
+
+  <!-- n8n Chat Style -->
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+
+  <!-- TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      background: radial-gradient(circle at top right, #0f172a, #020617);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+    }
+
+    /* Glowing animated background */
+    .glow-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 30% 30%, rgba(0,255,200,0.3), transparent 70%),
+                  radial-gradient(circle at 70% 70%, rgba(0,100,255,0.3), transparent 70%);
+      filter: blur(80px);
+      z-index: -1;
+      animation: pulse 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { opacity: 0.7; transform: scale(1); }
+      to { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* Custom chat bubble style */
+    n8n-chat {
+      --chat-background: rgba(255, 255, 255, 0.1);
+      --chat-border-radius: 1.25rem;
+      --chat-message-color: #fff;
+      --chat-user-message-bg: rgba(0, 255, 180, 0.25);
+      --chat-bot-message-bg: rgba(0, 150, 255, 0.25);
+      --chat-font-family: 'Inter', sans-serif;
+      --chat-input-bg: rgba(255,255,255,0.05);
+      --chat-input-color: #fff;
+      --chat-input-border: 1px solid rgba(255,255,255,0.2);
+      --chat-send-button-bg: #00ffc8;
+      --chat-send-button-hover-bg: #00bfff;
+    }
+
+    /* Floating card effect */
+    .chat-container {
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 1.5rem;
+      box-shadow: 0 0 40px rgba(0,255,255,0.2);
+      max-width: 480px;
+      margin: 4rem auto;
+      padding: 1rem;
+      transform: perspective(1000px) rotateX(5deg);
+      transition: transform 0.5s ease;
+    }
+
+    .chat-container:hover {
+      transform: perspective(1000px) rotateX(0deg) scale(1.02);
+      box-shadow: 0 0 60px rgba(0,255,200,0.4);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 800;
+      color: #00ffc8;
+      text-shadow: 0 0 10px #00ffc8, 0 0 20px #00bfff;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow-bg"></div>
+
+  <div class="chat-container">
+    <h1>PipelineAI Chat 💬</h1>
+    <div id="chat"></div>
+  </div>
+
+  <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
     createChat({
-        webhookUrl: 'https://pipelineaibot.app.n8n.cloud/webhook/fdb5ceb1-3452-4f25-b882-bec085488928/chat',
-        initialMessages: [
+      webhookUrl: 'https://pipelineaibot.app.n8n.cloud/webhook/fdb5ceb1-3452-4f25-b882-bec085488928/chat',
+      initialMessages: [
         'Überschrift',
-        'Ich bin der PipelineAI Bot, wie kann ich dir helfen? ...... etc.'
-    ],
+        'Ich bin der PipelineAI Bot, wie kann ich dir helfen?'
+      ],
+      target: '#chat'
     });
-</script> 
-
+  </script>
+</body>
+</html>
