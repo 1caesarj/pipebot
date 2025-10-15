@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pipebot Test</title>
-</head>
-<body>
-  <h1>Pipebot-Paul</h1>
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+<script type="module">
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-  <iframe 
-    src="https://pipelineaibot.app.n8n.cloud/chat/fdb5ceb1-3452-4f25-b882-bec085488928"
-    style="width:400px; height:600px; border:none; border-radius:16px; box-shadow:0 0 20px rgba(0,0,0,0.1);">
-  </iframe>
+    createChat({
+        webhookUrl: 'https://pipelineaibot.app.n8n.cloud/webhook/fdb5ceb1-3452-4f25-b882-bec085488928/chat',
+        initialMessages: [
+        'Überschrift',
+        'Ich bin der PipelineAI Bot, wie kann ich dir helfen? ...... etc.'
+    ],
+    });
+</script> 
 
-</body>
-</html>
